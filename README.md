@@ -53,7 +53,7 @@ A shell script to test the implementations of `finder.sh` and `writer.sh`:
 - Runs `finder.sh` with `filesdir` set to `/tmp/aeld-data` and `searchstr` set to `writestr`.
 - Compares the output of `finder.sh` with the expected output "The number of files are numfiles and the number of matching lines are numfiles". Prints “success” on match or “error” on mismatch.
 
-4. **full-test.sh**
+4. **full-test.sh**  <br>
 A shell script to fully test the implementation of the Finder App. Ensure all steps pass by running this script.
 
 
