@@ -1,28 +1,83 @@
-# aesd-assignments
-This repo contains public starter source code, scripts, and documentation for Advanced Embedded Software Development (ECEN-5713) and Advanced Embedded Linux Development assignments University of Colorado, Boulder.
 
-## Setting Up Git
+# File Manipulation Shell Scripts
 
-Use the instructions at [Setup Git](https://help.github.com/en/articles/set-up-git) to perform initial git setup steps. For AESD you will want to perform these steps inside your Linux host virtual or physical machine, since this is where you will be doing your development work.
+File Manipulation is a simple shell scripting project designed to help users search for text strings within files in a specified directory. It includes scripts for finding text within files and writing text to files, and also includes a testing script to ensure the functionality of these scripts.
 
-## Setting up SSH keys
+## Installation Instructions
 
-See instructions in [Setting-up-SSH-Access-To-your-Repo](https://github.com/cu-ecen-aeld/aesd-assignments/wiki/Setting-up-SSH-Access-To-your-Repo) for details.
+1. Clone the repository to your local machine using:
 
-## Specific Assignment Instructions
+```bash
+  git clone https://github.com/AbhinitShetty/FileManipulation-ShellScripts.git
+```
+2. Navigate to the project directory:
 
-Some assignments require further setup to pull in example code or make other changes to your repository before starting.  In this case, see the github classroom assignment start instructions linked from the assignment document for details about how to use this repository.
+```bash
+  cd finder-app/
+```
+3. Make the shell scripts executable:
+```bash
+  chmod +x finder.sh writer.sh finder-test.sh full-test.sh
+```
+## Project Explanation
 
+The Finder App consists of the following components:
+
+1. **writer.sh**
+- Accepts two arguments: a file path (`writefile`) and a text string (`writestr`).
+- Exits with a return value of 1 and an error message if any of the arguments are not specified.
+- Creates a new file with the path `writefile` and writes `writestr` to it, overwriting any existing file and creating the path if it doesn’t exist.
+- Exits with a return value of 1 and an error message if the file could not be created.
+- Example Invocation:	
+```bash
+  ./writer.sh /tmp/aesd/assignment1/sample.txt ios
+```
+Creates file : **/tmp/aesd/assignment1/sample.txt** \
+With content : **ios**
+
+2. **finder.sh**
+- Accepts two runtime arguments: a directory path (`filesdir`) and a text string (`searchstr`).
+- Exits with a return value of 1 and an error message if any of the parameters are not specified.
+- Exits with a return value of 1 and an error message if `filesdir` is not a valid directory.
+- Prints a message "The number of files are X and the number of matching lines are Y" where X is the number of files in the directory and its subdirectories, and Y is the number of lines containing `searchstr`.
+- Example Invocation:
+```bash
+  ./finder.sh /tmp/aesd/assignment1 linux
+```
+3. **finder-test.sh** <br>
+A shell script to test the implementations of `finder.sh` and `writer.sh`:
+- Accepts two arguments: the number of files to write (`numfiles`) and the string to write to each file (`writestr`).
+- Defaults to `numfiles` 10 and `writestr` "AELD_IS_FUN" if respective arguments are not specified.
+- Creates an empty directory `/tmp/aeld-data`.
+- Loops to create `numfiles` files in the directory `/tmp/aeld-data` using the `writer.sh` script.
+- Runs `finder.sh` with `filesdir` set to `/tmp/aeld-data` and `searchstr` set to `writestr`.
+- Compares the output of `finder.sh` with the expected output "The number of files are numfiles and the number of matching lines are numfiles". Prints “success” on match or “error” on mismatch.
+
+4. **full-test.sh**
+A shell script to fully test the implementation of the Finder App. Ensure all steps pass by running this script.
+
+
+## Usage
+
+1. To write text to a file, use:
+
+```bash
+  ./writer.sh <file_path> <text_string>
+```
+
+2. To find text within files, use:
+```bash
+  ./finder.sh <path_to_directory> <search_string>
+```
+	
+3. To test the scripts, use:
+```bash
+  ./finder-test.sh <num_files> <write_string>
+```
+	
 ## Testing
 
-The basis of the automated test implementation for this repository comes from [https://github.com/cu-ecen-aeld/assignment-autotest/](https://github.com/cu-ecen-aeld/assignment-autotest/)
-
-The assignment-autotest directory contains scripts useful for automated testing  Use
+1. Run the `full-test.sh` script to ensure all functionalities are working as expected:
+```bash
+  ./full-test.sh
 ```
-git submodule update --init --recursive
-```
-to synchronize after cloning and before starting each assignment, as discussed in the assignment instructions.
-
-As a part of the assignment instructions, you will setup your assignment repo to perform automated testing using github actions.  See [this page](https://github.com/cu-ecen-aeld/aesd-assignments/wiki/Setting-up-Github-Actions) for details.
-
-Note that the unit tests will fail on this repository, since assignments are not yet implemented.  That's your job :) 
